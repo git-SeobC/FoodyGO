@@ -1,7 +1,8 @@
 using System;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using FoodyGo.Services.GPS;
+using FoodyGo.Utils;
+using System.Collections;
 
 namespace FoodyGo.Mapping
 {
@@ -44,10 +45,16 @@ namespace FoodyGo.Mapping
             simulatedLocationProvider.target = _simulationTarget;
             simulatedLocationProvider.startLocation = _simulationStartLocation;
             _locationProvider = simulatedLocationProvider;
-            isReady = true;
+            timeStamp = Epoch.Now;
 #else
             _locationProvider = gameeObject.AddComponent<DeviceLocationProvider>();
 #endif
+        }
+
+        IEnumerator Start()
+        {
+            yield return new WaitUntil(() => _locationProvider.isRunning);
+            isReady = true;
         }
 
         private void OnEnable()
@@ -70,7 +77,7 @@ namespace FoodyGo.Mapping
             accuracy = newAccuracy;
             timeStamp = newTimeStamp;
 
-            if (mapEnvelope.Contains(new MapLocation(latitude, longitude)) == false)
+            //if (mapEnvelope.Contains(new MapLocation(latitude, longitude)) == false)
             {
                 CenterMap();
             }
@@ -93,6 +100,7 @@ namespace FoodyGo.Mapping
             var lat2 = GoogleMapUtils.AdjustLatByPixels(latitude, -mapTileSizePixels / 2, mapTileZoomLevel);
 
             mapEnvelope = new MapEnvelope((float)lon1, (float)lat1, (float)lon2, (float)lat2);
+
             onMapRedraw?.Invoke();
         }
     }
