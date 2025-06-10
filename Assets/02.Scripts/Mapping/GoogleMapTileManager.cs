@@ -26,10 +26,14 @@ namespace FoodyGo.Mapping
         GoogleMapTile[,] _mapTiles = new GoogleMapTile[GRID_SIZE, GRID_SIZE];
         readonly int[] TILE_OFFSETS = { -1, 0, 1 };
         const int GRID_SIZE = 3;
+        const float PLANE_SIZE = 10f;
+
+        MapLocation _mapOrigin;
 
         IEnumerator Start()
         {
             yield return new WaitUntil(() => _gpsLocationService.isReady);
+            _mapOrigin = _gpsLocationService.mapCenter;
             InitializeTiles();
             isInitialized = true;
         }
@@ -78,6 +82,12 @@ namespace FoodyGo.Mapping
             return CalcWorldPosition(_currentCenterTileCoord);
         }
 
+        public Vector3 GetWorldPosition(double latitude, double longitude)
+        {
+            Vector2Int coord = CalcTileCoordinate(new MapLocation(latitude, longitude));
+            return CalcWorldPosition(coord);
+        }   
+
         /// <summary>
         /// 타일 인덱스로 게임월드 포지션 산출
         /// </summary>
@@ -85,8 +95,7 @@ namespace FoodyGo.Mapping
         /// <returns> 월드 위치 </returns>
         Vector3 CalcWorldPosition(Vector2Int coord)
         {
-            float spacing = 10f;
-            return new Vector3(-coord.x * spacing, 0f, coord.y * spacing);
+            return new Vector3(-coord.x * PLANE_SIZE, 0f, coord.y * PLANE_SIZE);
         }
 
         //float CalcWorldPositionSpacing(int zoomLevel)
@@ -97,19 +106,15 @@ namespace FoodyGo.Mapping
 
         Vector2Int CalcTileCoordinate(MapLocation center)
         {
-            // 메르카토르 픽셀 좌표 (zoom = 21)
-            int pixelX21 = GoogleMapUtils.LonToX(center.longitude);
-            int pixelY21 = GoogleMapUtils.LatToY(center.latitude);
+            double meterPerLatDeg = 110574.0; // 위도 1도당 미터
+            double meterPerLonDeg = 111320.0 * Mathf.Cos((float)_mapOrigin.latitude * Mathf.Deg2Rad); // 경도 1도당 미터
 
-            // GoogleMap zoomlevel 1 당 2배씩 값이 작아지기 때문에 (공식문서 참조)
-            // ZoomLevel 차이만큼 오른쪽으로 Bit-Shilft 하면 원하는 픽셀값을 구할 수 있다.
-            int shift = 21 - _gpsLocationService.mapTileZoomLevel;
-            int pixelX = pixelX21 >> shift;
-            int pixelY = pixelY21 >> shift;
+            // 중심점에서 이동한 거리
+            double deltaOfLatDeg = (center.latitude - _mapOrigin.latitude) * meterPerLatDeg;
+            double deltaOfLonDeg = (center.longitude - _mapOrigin.longitude) * meterPerLonDeg;
 
-            // MapTile 당 픽셀수로 나누면 인덱스를 구할 수 있다.
-            return new Vector2Int(Mathf.RoundToInt(pixelX / (float)_gpsLocationService.mapTileSizePixels),
-                                  Mathf.RoundToInt(pixelY / (float)_gpsLocationService.mapTileSizePixels));
+            return new Vector2Int(-Mathf.FloorToInt((float)deltaOfLonDeg / PLANE_SIZE),
+                                   Mathf.FloorToInt((float)deltaOfLatDeg / PLANE_SIZE));
         }
 
         private void HandleCenterShift()

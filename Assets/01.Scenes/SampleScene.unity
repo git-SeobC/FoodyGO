@@ -709,7 +709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <mapTileScale>k__BackingField: 1
   <mapTileSizePixels>k__BackingField: 640
-  <mapTileZoomLevel>k__BackingField: 16
+  <mapTileZoomLevel>k__BackingField: 17
   _isSimulation: 1
   _simulationTarget: {fileID: 1079674006}
   _simulationStartLocation:
@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gpsLocationService: {fileID: 1925631541}
-  monsterPrefab: {fileID: 3609484949916673244, guid: b4091ade41acbcf48b1800b85e25e819, type: 3}
+  monsterPrefab: {fileID: 1931156407734549358, guid: b4091ade41acbcf48b1800b85e25e819, type: 3}
   monsterSpawnRate: 0.75
   latitudeSpawnOffset: 0.001
   longitudeSpawnOffset: 0.001
@@ -775,6 +775,7 @@ MonoBehaviour:
   oneStepRange: 125
   twoStepRange: 150
   threeStepRange: 200
+  _googleMapTileManager: {fileID: 1135854622}
 --- !u!4 &2081833470
 Transform:
   m_ObjectHideFlags: 0
@@ -784,7 +785,7 @@ Transform:
   m_GameObject: {fileID: 2081833468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.4840794, y: 2.237389, z: 3.4675965}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

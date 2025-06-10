@@ -12,7 +12,7 @@ namespace FoodyGo.Singletons
                 {
                     T component = GameObject.FindAnyObjectByType<T>();
 
-                    if (component != null)
+                    if (component == null)
                     {
                         GameObject empty = new GameObject(typeof(T).Name);
                         component = empty.AddComponent<T>();
