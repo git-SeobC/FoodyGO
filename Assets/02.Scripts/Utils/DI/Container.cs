@@ -54,7 +54,8 @@ namespace FoodyGo.Utils.DI
 
         public object Resolve(Type type)
         {
-            return _registration[type];
+            if (_registration.TryGetValue(type, out object obj)) return obj;
+            else return null;
         }
     }
 }

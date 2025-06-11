@@ -53,7 +53,8 @@ namespace FoodyGo.Utils.DI
                 {
                     //fieldInfo.GetType() 을 하면안됨, FieldType을 통해 FieldInfo의 원래 타입을 가지고 와야함
                     object value = container.Resolve(fieldInfo.FieldType);
-                    fieldInfo.SetValue(target, value);
+
+                    if (value != null) fieldInfo.SetValue(target, value);
                 }
             }
         }
