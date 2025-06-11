@@ -31,6 +31,7 @@ namespace FoodyGo.Mapping
 
         public event Action onMapRedraw;
 
+        public MapLocation mapOrigin;
         public MapLocation mapCenter;
         public MapEnvelope mapEnvelope;
         public Vector3 mapWorldCenter;
@@ -47,13 +48,14 @@ namespace FoodyGo.Mapping
             _locationProvider = simulatedLocationProvider;
             timeStamp = Epoch.Now;
 #else
-            _locationProvider = gameeObject.AddComponent<DeviceLocationProvider>();
+            _locationProvider = gameObject.AddComponent<DeviceLocationProvider>();
 #endif
         }
 
         IEnumerator Start()
         {
             yield return new WaitUntil(() => _locationProvider.isRunning);
+            mapOrigin = new MapLocation(_locationProvider.latitude, _locationProvider.longitude);
             isReady = true;
         }
 

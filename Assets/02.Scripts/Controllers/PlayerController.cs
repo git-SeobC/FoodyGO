@@ -1,5 +1,6 @@
 using FoodyGo.Mapping;
 using FoodyGo.UIs;
+using FoodyGo.Utils.DI;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -71,7 +72,11 @@ namespace FoodyGo.Controllers
                 velocity = Vector3.zero;
             }
         }
+#elif UNITY_ANDROID
+
 #endif
+
+        [Inject] GPSLocationService _gpsLocationService;
 
         private void OnTriggerEnter(Collider other)
         {

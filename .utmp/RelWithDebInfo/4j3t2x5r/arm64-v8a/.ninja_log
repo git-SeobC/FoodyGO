@@ -1,0 +1,10 @@
+# ninja log v5
+22	2374	7713050000432394	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	b0024e834aacb03d
+51	2493	7713050000921093	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	1cdb5c405c2e9b6e
+68	2537	7713050002841055	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	c34f235c1e802dd4
+80	2588	7713050002990648	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	8a4cb497e9539fe5
+14	2703	7713050001479596	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	dd5782f8d25f1f5f
+9	2767	7713050005249933	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	bb4a4ebca212c048
+30	2784	7713050005698948	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	404f4d175eba925d
+1	3007	7713050008161305	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	34e803a0513a7edf
+3008	3136	7713050009526710	C:/Users/UnityBootCamp/Documents/GitHub/FoodyGO/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4j3t2x5r/obj/arm64-v8a/libgame.so	22fc0022ba144dd0
